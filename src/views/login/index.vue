@@ -24,7 +24,7 @@
 
 <script>
 import request from '@/utils/request'
-import { captcha, login } from '@/api'
+import { captcha, login, userInfo } from '@/api'
 import { Base64 } from 'js-base64'
 import { Toast } from 'mint-ui'
 export default {
@@ -107,25 +107,41 @@ export default {
         headers: {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
-      }).then((data) => {
-        const res = data.data || {}
+      }).then((res) => {
+        const r = res.data || {}
         this.getCaptchaImg()
-        if (res.msg) {
+        if (r.msg) {
           Toast({
             message: res.msg,
             duration: 5000
           })
         }
-        if (res.status === 1 && res.token) {
-          this.$Local.set('USER_TOKEN', res.token)
+        if (r.status === 1 && r.token) {
+          this.getUserInfo(r.token)
         }
       })
     },
+
+    getUserInfo(token) {
+      request
+        .get(`${userInfo}/${token}`, {})
+        .then((res) => {
+          const r = res.data
+          if (r && r.data && r.status === 1) {
+            this.$store.commit('account/setToken', r.data.token)
+          }
+        })
+        .catch((err) => {
+          console.log(456, err)
+        })
+    },
+
     getCaptchaImg() {
       request
         .get(captcha, {})
         .then((res) => {
-          if (res.data && res.data.data && res.data.data.img) {
+          const r = res.data
+          if (r && r.data && r.data.img) {
             this.captchaImg = res.data.data.img
             this.ajax.uuid = res.data.data.uuid
           }
@@ -136,7 +152,7 @@ export default {
     }
   },
   mounted() {
-    console.log(11122, this.$store.state, this.ajax)
+    // console.log(11122, this.$store.state, this.ajax)
     this.getCaptchaImg()
   }
 }
