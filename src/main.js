@@ -7,12 +7,14 @@ import router from './router'
 import store from './store'
 import 'mint-ui/lib/style.css'
 import './assets/styles/main.less'
-import { Button, Cell, Field } from 'mint-ui'
+import { Button, Cell, Field, Radio } from 'mint-ui'
 
 Vue.config.productionTip = false
 Vue.component(Button.name, Button)
 Vue.component(Cell.name, Cell)
 Vue.component(Field.name, Field)
+Vue.component(Radio.name, Radio)
+
 /* eslint-disable no-new */
 new Vue({
   el: '#app',

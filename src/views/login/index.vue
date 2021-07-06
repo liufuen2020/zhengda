@@ -4,19 +4,28 @@
       <img src="../../assets/logo.png" />
       <span>郑州大学研究生院统一身份验证</span>
     </div>
-
-    <mt-field label="用户名" placeholder="请输入用户名" v-model="ajax.username"></mt-field>
-    <mt-field label="密码" placeholder="请输入密码" type="password" v-model="ajax.password"></mt-field>
-    <mt-field label="验证码" v-model="ajax.captcha">
-      <img :src="'data:image/png;base64,' + captchaImg" height="45px" width="100px" @click="getCaptchaImg" />
-    </mt-field>
-    <mt-button type="primary" @click="sendLogin">登录</mt-button>
+    <div>
+      <mt-field label="用户名" placeholder="请输入用户名" v-model="ajax.username" :attr="{ maxlength: 50 }"></mt-field>
+      <mt-field
+        label="密码"
+        placeholder="请输入密码"
+        :attr="{ maxlength: 50 }"
+        type="password"
+        v-model="ajax.password"
+      ></mt-field>
+      <mt-field label="验证码" v-model="ajax.yzm">
+        <img :src="'data:image/png;base64,' + captchaImg" height="45px" width="100px" @click="getCaptchaImg" />
+      </mt-field>
+      <mt-radio v-model="ajax.userType" :options="options" class="radio"> </mt-radio>
+      <mt-button type="primary" @click="sendLogin">登录</mt-button>
+    </div>
   </div>
 </template>
 
 <script>
 import axios from 'axios'
 import { captcha, login } from '@/api'
+import { Base64 } from 'js-base64'
 import { Toast } from 'mint-ui'
 export default {
   name: 'HelloWorld',
@@ -29,17 +38,57 @@ export default {
         password: '',
         uuid: '',
         yzm: '',
-        loginType: '',
+        loginType: 'ACCOUNT',
         userType: 'STUDENT',
         xxdm: '10459',
         isVirtual: false
-      }
+      },
+      options: [
+        {
+          label: '学生端',
+          value: 'STUDENT'
+        },
+        {
+          label: '教师端',
+          value: 'TEACHER'
+        },
+        {
+          label: '管理端',
+          value: 'SYSTEM'
+        }
+      ]
     }
   },
   methods: {
     sendLogin() {
+      if (!this.ajax.username) {
+        Toast({
+          message: '请输入用户名',
+          duration: 5000
+        })
+        return
+      }
+
+      if (!this.ajax.password) {
+        Toast({
+          message: '请输入密码',
+          duration: 5000
+        })
+        return
+      }
+
+      if (!this.ajax.yzm) {
+        Toast({
+          message: '请输入验证码',
+          duration: 5000
+        })
+        return
+      }
+
       const payload = {
-        ...this.ajax
+        ...this.ajax,
+        password: Base64.encode(this.ajax.password),
+        name: this.ajax.username
       }
       axios({
         method: 'post',
@@ -47,7 +96,6 @@ export default {
         data: payload,
         transformRequest: [
           function(data) {
-            console.log(12331, data)
             let ret = ''
             for (let it in data) {
               ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
@@ -61,16 +109,15 @@ export default {
         }
       }).then((data) => {
         const res = data.data || {}
-        if (res.status * 1 === 0 && res.msg) {
+        this.getCaptchaImg()
+        if (res.msg) {
           Toast({
             message: res.msg,
-            position: 'bottom',
             duration: 5000
           })
         }
         console.log(23232, res)
       })
-      console.log(123, this.ajax)
     },
     getCaptchaImg() {
       axios
@@ -78,7 +125,7 @@ export default {
         .then((res) => {
           if (res.data && res.data.data && res.data.data.img) {
             this.captchaImg = res.data.data.img
-            console.log(123, res.data)
+            this.ajax.uuid = res.data.data.uuid
           }
         })
         .catch((err) => {
@@ -94,4 +141,8 @@ export default {
 </script>
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
-<style scoped lang="less"></style>
+<style scoped lang="less">
+.login .radio .mint-cell {
+  float: left;
+}
+</style>
