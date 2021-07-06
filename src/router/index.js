@@ -1,47 +1,48 @@
-import Vue from "vue";
-import Router from "vue-router";
-import HelloWorld from "@/components/HelloWorld";
-import login from "@/views/login";
+import Vue from 'vue'
+import Router from 'vue-router'
+import local from '@/utils/localstorage'
+import HelloWorld from '@/components/HelloWorld'
+import login from '@/views/login'
 
-Vue.use(Router);
+Vue.use(Router)
 
 const RouterList = [
   {
-    path: "/HelloWorld",
-    name: "HelloWorld",
+    path: '/',
+    name: 'HelloWorld',
     component: HelloWorld,
     meta: {
-      title: "列表",
+      title: '列表',
       isLogin: true
     }
   },
   {
-    path: "/login",
-    name: "login",
+    path: '/login',
+    name: 'login',
     component: login
   }
-];
+]
 
 const router = new Router({
   routes: RouterList
-});
+})
 
 router.beforeEach((to, from, next) => {
-  next();
-  if (to.matched.some(res => res.meta.isLogin)) {
+  next()
+  if (to.matched.some((res) => res.meta.isLogin)) {
     // 判断是否需要登录
-    if (sessionStorage["username"]) {
-      next();
+    if (local.get('USER_TOKEN')) {
+      next()
     } else {
       next({
-        path: "/login",
+        path: '/login',
         query: {
           redirect: to.fullPath
         }
-      });
+      })
     }
   } else {
-    next();
+    next()
   }
-});
-export default router;
+})
+export default router

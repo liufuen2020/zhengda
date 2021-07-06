@@ -1,38 +1,38 @@
-import db from "../../utils/localstorage";
+import local from '@/utils/localstorage'
 
 export default {
   namespaced: true,
   state: {
-    token: db.get("USER_TOKEN"),
-    expireTime: db.get("EXPIRE_TIME"),
-    user: db.get("USER"),
-    permissions: db.get("PERMISSIONS"),
-    roles: db.get("ROLES")
+    token: local.get('USER_TOKEN'),
+    expireTime: local.get('EXPIRE_TIME'),
+    user: local.get('USER'),
+    permissions: local.get('PERMISSIONS'),
+    roles: local.get('ROLES')
   },
   mutations: {
     setToken(state, val) {
-      db.save("USER_TOKEN", val);
-      state.token = val;
+      local.set('USER_TOKEN', val)
+      state.token = val
     },
     setExpireTime(state, val) {
-      db.save("EXPIRE_TIME", val);
-      state.expireTime = val;
+      local.set('EXPIRE_TIME', val)
+      state.expireTime = val
     },
     setUser(state, val) {
-      db.save("USER", val);
-      state.user = val;
+      local.set('USER', val)
+      state.user = val
     },
     setPermissions(state, val) {
-      db.save("PERMISSIONS", val);
-      state.permissions = val;
+      local.set('PERMISSIONS', val)
+      state.permissions = val
     },
     setRoles(state, val) {
-      db.save("ROLES", val);
-      state.roles = val;
+      local.set('ROLES', val)
+      state.roles = val
     },
     setYx(state, val) {
-      db.save("isYxRole", val);
-      state.isYxRole = val;
+      local.set('isYxRole', val)
+      state.isYxRole = val
     }
   }
-};
+}

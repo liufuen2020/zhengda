@@ -7,6 +7,7 @@ import router from './router'
 import store from './store'
 import 'mint-ui/lib/style.css'
 import './assets/styles/main.less'
+import Local from './utils/localstorage'
 import { Button, Cell, Field, Radio } from 'mint-ui'
 
 Vue.config.productionTip = false
@@ -23,6 +24,10 @@ new Vue({
   components: { App },
   template: '<App/>'
 })
+// 绑定全局方法
+Vue.prototype.$Local = Local
+
+// 适配移动端
 ;(function(doc, win) {
   var resizeEvt
   var recalc = function() {

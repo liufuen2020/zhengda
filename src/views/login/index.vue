@@ -23,7 +23,7 @@
 </template>
 
 <script>
-import axios from 'axios'
+import request from '@/utils/request'
 import { captcha, login } from '@/api'
 import { Base64 } from 'js-base64'
 import { Toast } from 'mint-ui'
@@ -90,7 +90,7 @@ export default {
         password: Base64.encode(this.ajax.password),
         name: this.ajax.username
       }
-      axios({
+      request({
         method: 'post',
         url: login,
         data: payload,
@@ -116,11 +116,13 @@ export default {
             duration: 5000
           })
         }
-        console.log(23232, res)
+        if (res.status === 1 && res.token) {
+          this.$Local.set('USER_TOKEN', res.token)
+        }
       })
     },
     getCaptchaImg() {
-      axios
+      request
         .get(captcha, {})
         .then((res) => {
           if (res.data && res.data.data && res.data.data.img) {
