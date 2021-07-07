@@ -109,6 +109,7 @@ export default {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
       }).then((res) => {
+        alert(1)
         Indicator.close()
         const r = res.data || {}
         this.getCaptchaImg()

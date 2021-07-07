@@ -14,7 +14,7 @@ const RouterList = [
     component: Index,
     meta: {
       title: '首页',
-      isLogin: true
+      isLogin: false
     }
   },
   {
