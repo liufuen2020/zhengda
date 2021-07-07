@@ -1,34 +1,14 @@
 <template>
-  <div class="login">
-    <div class="logo">
-      <img src="../../assets/logo.png" />
-      <span>郑州大学研究生院统一身份验证</span>
-    </div>
-    <div>
-      <mt-field label="用户名" placeholder="请输入用户名" v-model="ajax.username" :attr="{ maxlength: 50 }"></mt-field>
-      <mt-field
-        label="密码"
-        placeholder="请输入密码"
-        :attr="{ maxlength: 50 }"
-        type="password"
-        v-model="ajax.password"
-      ></mt-field>
-      <mt-field label="验证码" v-model="ajax.yzm">
-        <img :src="'data:image/png;base64,' + captchaImg" height="45px" width="100px" @click="getCaptchaImg" />
-      </mt-field>
-      <mt-radio v-model="ajax.userType" :options="options" class="radio"> </mt-radio>
-      <mt-button type="primary" @click="sendLogin">登录</mt-button>
-    </div>
-  </div>
+  <div class="index">ww</div>
 </template>
 
 <script>
 import request from '@/utils/request'
 import { captcha, login, userInfo } from '@/api'
 import { Base64 } from 'js-base64'
-import { Toast, Indicator } from 'mint-ui'
+import { Toast } from 'mint-ui'
 export default {
-  name: 'HelloWorld',
+  name: 'index',
   data() {
     return {
       captchaImg: '',
@@ -90,7 +70,6 @@ export default {
         password: Base64.encode(this.ajax.password),
         name: this.ajax.username
       }
-      Indicator.open()
       request({
         method: 'post',
         url: login,
@@ -109,12 +88,11 @@ export default {
           'Content-Type': 'application/x-www-form-urlencoded'
         }
       }).then((res) => {
-        Indicator.close()
         const r = res.data || {}
         this.getCaptchaImg()
         if (r.msg) {
           Toast({
-            message: r.msg,
+            message: res.msg,
             duration: 5000
           })
         }
@@ -131,7 +109,6 @@ export default {
           const r = res.data
           if (r && r.data && r.status === 1) {
             this.$store.commit('account/setToken', r.data.token)
-            this.$router.push({ path: '/', query: { from: this.ajax.userType } })
           }
         })
         .catch((err) => {
@@ -155,6 +132,7 @@ export default {
     }
   },
   mounted() {
+    // console.log(11122, this.$store.state, this.ajax)
     this.getCaptchaImg()
   }
 }

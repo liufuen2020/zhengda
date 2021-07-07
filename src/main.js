@@ -10,12 +10,12 @@ import './assets/styles/main.less'
 import Local from './utils/localstorage'
 import { Button, Cell, Field, Radio } from 'mint-ui'
 
-Vue.config.productionTip = false
 Vue.component(Button.name, Button)
 Vue.component(Cell.name, Cell)
 Vue.component(Field.name, Field)
 Vue.component(Radio.name, Radio)
 
+Vue.config.productionTip = false
 /* eslint-disable no-new */
 new Vue({
   el: '#app',
