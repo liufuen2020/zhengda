@@ -9,8 +9,12 @@ h4,
 h5,
 h6,
 p,
+ul,
+li,
 form {
   margin: 0;
+  margin: 0;
+  padding: 0;
 }
 body {
   font-family: 'Microsoft Yahei', 'Lucida Grande', 'Helvetica', 'Arial', 'Verdana', 'sans-serif';
@@ -25,29 +29,48 @@ body {
 input {
   font-family: 'Microsoft Yahei', 'Lucida Grande', 'Helvetica', 'Arial', 'Verdana', 'sans-serif';
 }
-* {
-  margin: 0;
-  padding: 0;
-}
+
 li {
   list-style-type: none;
 }
 table {
+  border-collapse: collapse;
   border-spacing: 0;
   border: none;
 }
 a {
-  color: #333333;
   text-decoration: none;
 }
+
+.link {
+  color: #4078c0;
+}
+
 input::-webkit-input-placeholder {
 }
 
 .g-mar-top10 {
   margin-top: (10 / @base);
 }
+
+.g-mar-top15 {
+  margin-top: (15 / @base);
+}
+.g-mar-top20 {
+  margin-top: (20 / @base);
+}
+.g-mar-top25 {
+  margin-top: (25 / @base);
+}
+.g-mar-top30 {
+  margin-top: (30 / @base);
+}
 .g-padd-left10 {
   padding-left: (10 / @base);
+}
+
+.g-mar-bottom20 {
+  margin-bottom: (20 / @base);
 }
 .g-flexbox {
   display: -moz-flex;
