@@ -5,6 +5,7 @@ import HelloWorld from '@/components/HelloWorld'
 import Login from '@/views/login'
 import Index from '@/views/index'
 import UserInfo from '@/views/userInfo'
+import Training from '@/views/training'
 
 Vue.use(Router)
 
@@ -29,6 +30,15 @@ const RouterList = [
     component: UserInfo,
     meta: {
       title: '研究生学籍信息',
+      isLogin: true
+    }
+  },
+  {
+    path: '/index/training',
+    name: 'training',
+    component: Training,
+    meta: {
+      title: '培养计划',
       isLogin: true
     }
   }

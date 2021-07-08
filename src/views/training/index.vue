@@ -44,10 +44,8 @@ export default {
 </script>
 
 <style scoped lang="less">
-@import url('../../../assets/styles/base.less');
+@import url('../../assets/styles/base.less');
 .resume {
   padding-top: (120 / @base);
-  .mint-cell-text {
-  }
 }
 </style>

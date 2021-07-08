@@ -2,7 +2,7 @@
   <div class="index">
     <div class="square">
       <ul class="square-inner flex">
-        <li v-for="item in listData" :key="item.id" @click="go(item.id)">
+        <li v-for="item in listData" :key="item.id" @click="go(item.path)">
           <span :class="['iconBg', 'icon_' + item.id]"></span>
           <p>{{ item.name }}</p>
         </li>
@@ -23,11 +23,13 @@ export default {
       listData: [
         {
           name: '研究生学籍',
-          id: '1'
+          id: '1',
+          path: '/index/userInfo'
         },
         {
           name: '培养计划',
-          id: '2'
+          id: '2',
+          path: '/index/training'
         },
         {
           name: '学生课表',
@@ -61,10 +63,8 @@ export default {
     }
   },
   methods: {
-    go(id) {
-      if (id * 1 === 1) {
-        this.$router.push({ path: '/index/userInfo' })
-      }
+    go(path) {
+      this.$router.push({ path: path })
     }
   },
   mounted() {}
