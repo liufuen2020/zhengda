@@ -62,16 +62,15 @@ export default {
   },
   methods: {
     go(id) {
-      alert(id)
+      if (id * 1 === 1) {
+        this.$router.push({ path: '/index/userInfo' })
+      }
     }
   },
-  mounted() {
-    this.getCaptchaImg()
-  }
+  mounted() {}
 }
 </script>
 
-<!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
 @import url('../../assets/styles/base.less');
 .index {
@@ -80,6 +79,7 @@ export default {
   background-repeat: no-repeat;
   background-size: (450 / @base) auto;
   background-position: (20 / @base) (-100 / @base);
+
   .square {
     position: relative;
     margin: 0 auto;

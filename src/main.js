@@ -8,12 +8,18 @@ import store from './store'
 import 'mint-ui/lib/style.css'
 import './assets/styles/main.less'
 import Local from './utils/localstorage'
-import { Button, Cell, Field, Radio } from 'mint-ui'
+import moment from 'moment'
+
+import { Button, Cell, Field, Radio, Navbar, TabItem, TabContainer, TabContainerItem } from 'mint-ui'
 
 Vue.component(Button.name, Button)
 Vue.component(Cell.name, Cell)
 Vue.component(Field.name, Field)
 Vue.component(Radio.name, Radio)
+Vue.component(Navbar.name, Navbar)
+Vue.component(TabItem.name, TabItem)
+Vue.component(TabContainer.name, TabContainer)
+Vue.component(TabContainerItem.name, TabContainerItem)
 
 Vue.config.productionTip = false
 /* eslint-disable no-new */
@@ -26,7 +32,7 @@ new Vue({
 })
 // 绑定全局方法
 Vue.prototype.$Local = Local
-
+Vue.prototype.$moment = moment //赋值使用
 // 适配移动端
 ;(function(doc, win) {
   var resizeEvt

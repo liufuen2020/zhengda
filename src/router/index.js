@@ -4,23 +4,33 @@ import local from '@/utils/localstorage'
 import HelloWorld from '@/components/HelloWorld'
 import Login from '@/views/login'
 import Index from '@/views/index'
+import UserInfo from '@/views/userInfo'
 
 Vue.use(Router)
 
 const RouterList = [
+  {
+    path: '/login',
+    name: 'Login',
+    component: Login
+  },
   {
     path: '/',
     name: 'index',
     component: Index,
     meta: {
       title: '首页',
-      isLogin: false
+      isLogin: true
     }
   },
   {
-    path: '/login',
-    name: 'Login',
-    component: Login
+    path: '/index/userInfo',
+    name: 'userInfo',
+    component: UserInfo,
+    meta: {
+      title: '研究生学籍信息',
+      isLogin: true
+    }
   }
 ]
 
