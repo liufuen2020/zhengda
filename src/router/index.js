@@ -6,6 +6,7 @@ import Login from '@/views/login'
 import Index from '@/views/index'
 import UserInfo from '@/views/userInfo'
 import Training from '@/views/training'
+import Opening from '@/views/opening'
 
 Vue.use(Router)
 
@@ -34,11 +35,20 @@ const RouterList = [
     }
   },
   {
-    path: '/index/training',
+    path: '/index/training', // 培养计划
     name: 'training',
     component: Training,
     meta: {
       title: '培养计划',
+      isLogin: true
+    }
+  },
+  {
+    path: '/index/opening', // 开题报告
+    name: 'opening',
+    component: Opening,
+    meta: {
+      title: '开题报告',
       isLogin: true
     }
   }

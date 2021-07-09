@@ -146,11 +146,14 @@ export default {
     th,
     td {
       font-size: (24 / @base);
-      color: #8888;
+      color: #666;
       font-weight: normal;
       width: 25%;
       text-align: center;
       border: 1px solid #d9d9d9;
+    }
+    th {
+      color: #999;
     }
   }
 }

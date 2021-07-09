@@ -41,7 +41,8 @@ export default {
         },
         {
           name: '开题报告信息',
-          id: '5'
+          id: '5',
+          path: '/index/opening'
         },
         {
           name: '中期检查信息',

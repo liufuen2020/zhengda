@@ -33,6 +33,7 @@ new Vue({
 // 绑定全局方法
 Vue.prototype.$Local = Local
 Vue.prototype.$moment = moment //赋值使用
+
 // 适配移动端
 ;(function(doc, win) {
   var resizeEvt
