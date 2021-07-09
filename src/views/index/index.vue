@@ -54,7 +54,8 @@ export default {
         },
         {
           name: '学生科研成果',
-          id: '8'
+          id: '8',
+          path: '/index/research'
         },
         {
           name: '毕业论文信息',

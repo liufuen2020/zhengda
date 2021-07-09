@@ -10,7 +10,7 @@ import './assets/styles/main.less'
 import Local from './utils/localstorage'
 import moment from 'moment'
 
-import { Button, Cell, Field, Radio, Navbar, TabItem, TabContainer, TabContainerItem } from 'mint-ui'
+import { Button, Cell, Field, Radio, Navbar, TabItem, TabContainer, TabContainerItem, Loadmore } from 'mint-ui'
 
 Vue.component(Button.name, Button)
 Vue.component(Cell.name, Cell)
@@ -20,6 +20,7 @@ Vue.component(Navbar.name, Navbar)
 Vue.component(TabItem.name, TabItem)
 Vue.component(TabContainer.name, TabContainer)
 Vue.component(TabContainerItem.name, TabContainerItem)
+Vue.component(Loadmore.name, Loadmore)
 
 Vue.config.productionTip = false
 /* eslint-disable no-new */
