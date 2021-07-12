@@ -1,25 +1,49 @@
 @import url('./base.less');
 .logo {
+  padding-top: (70 / @base);
   color: #fff;
+  text-align: center;
+  align-items: center;
   margin-bottom: (30 / @base);
   font-weight: 500;
   height: (100 / @base);
   line-height: (100 / @base);
-  img {
-    height: (100 / @base);
-    vertical-align: middle;
-  }
-  background-color: #26a2ff;
   span {
-    font-size: (36 / @base);
+    display: inline-block;
+    padding-left: (110 / @base);
+    background-image: url('../logo.png');
+    background-position: (0 / @base) (3 / @base);
+    background-repeat: no-repeat;
+    background-size: (100 / @base);
+    font-weight: 500;
+    font-size: (48 / @base);
     line-height: (100 / @base);
   }
 }
 
 .login {
+  .mint-cell:first-child .mint-cell-wrapper {
+    background: none;
+  }
+
   button {
     margin-top: (100 / @base);
     width: 90%;
+  }
+  .mint-radiolist {
+    padding-top: (40 / @base);
+  }
+  .radio {
+    width: 80%;
+    margin: 0 auto;
+    overflow: hidden;
+  }
+  .radio .mint-cell {
+    float: left;
+    background: none;
+  }
+  .radio .mint-cell-wrapper {
+    background: none;
   }
 }
 .line {
@@ -49,4 +73,12 @@
   // .mint-cell-wrapper {
   //   background-image: none;
   // }
+}
+.studentCourse {
+  .picker {
+    position: fixed;
+    bottom: 0;
+    background-color: #fff;
+    width: 100%;
+  }
 }

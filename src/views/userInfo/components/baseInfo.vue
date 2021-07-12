@@ -123,7 +123,7 @@
           </tr>
           <tr>
             <th>借书证号</th>
-            <td>{{ studentData.xjxx || '--' }}</td>
+            <td>{{ (studentData.xjxx && studentData.xjxx.jszh) || '--' }}</td>
           </tr>
           <tr>
             <th>血型</th>

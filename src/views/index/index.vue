@@ -12,10 +12,6 @@
 </template>
 
 <script>
-import request from '@/utils/request'
-import { captcha, login, userInfo } from '@/api'
-import { Base64 } from 'js-base64'
-import { Toast } from 'mint-ui'
 export default {
   name: 'index',
   data() {
@@ -33,7 +29,8 @@ export default {
         },
         {
           name: '学生课表',
-          id: '3'
+          id: '3',
+          path: '/index/studentCourse'
         },
         {
           name: '学生总成绩单',
@@ -46,11 +43,13 @@ export default {
         },
         {
           name: '中期检查信息',
-          id: '6'
+          id: '6',
+          path: '/index/midexam'
         },
         {
           name: '预答辩信息',
-          id: '7'
+          id: '7',
+          path: '/index/reply'
         },
         {
           name: '学生科研成果',

@@ -1,24 +1,31 @@
 <template>
   <div class="login">
     <div class="logo">
-      <img src="../../assets/logo.png" />
-      <span>郑州大学研究生院统一身份验证</span>
+      <span>郑州大学研究生院</span>
     </div>
-    <div>
-      <mt-field label="用户名" placeholder="请输入用户名" v-model="ajax.username" :attr="{ maxlength: 50 }"></mt-field>
-      <mt-field
-        label="密码"
-        placeholder="请输入密码"
-        :attr="{ maxlength: 50 }"
-        type="password"
-        v-model="ajax.password"
-      ></mt-field>
-      <mt-field label="验证码" v-model="ajax.yzm">
-        <img :src="'data:image/png;base64,' + captchaImg" height="45px" width="100px" @click="getCaptchaImg" />
-      </mt-field>
-      <mt-radio v-model="ajax.userType" :options="options" class="radio"> </mt-radio>
-      <mt-button type="primary" @click="sendLogin">登录</mt-button>
+
+    <div class="loginBox">
+      <div>
+        <mt-field
+          label="用户名"
+          placeholder="请输入用户名"
+          v-model="ajax.username"
+          :attr="{ maxlength: 50 }"
+        ></mt-field>
+        <mt-field
+          label="密码"
+          placeholder="请输入密码"
+          :attr="{ maxlength: 50 }"
+          type="password"
+          v-model="ajax.password"
+        ></mt-field>
+        <mt-field label="验证码" v-model="ajax.yzm" placeholder="输入验证码">
+          <img :src="'data:image/png;base64,' + captchaImg" height="45px" width="100px" @click="getCaptchaImg" />
+        </mt-field>
+        <mt-radio v-model="ajax.userType" :options="options" class="radio"> </mt-radio>
+      </div>
     </div>
+    <div class="loginBtn"><mt-button type="primary" @click="sendLogin">登录</mt-button></div>
   </div>
 </template>
 
@@ -51,11 +58,11 @@ export default {
         {
           label: '教师端',
           value: 'TEACHER'
-        },
-        {
-          label: '管理端',
-          value: 'SYSTEM'
         }
+        // {
+        //   label: '管理端',
+        //   value: 'SYSTEM'
+        // }
       ]
     }
   },
@@ -131,6 +138,7 @@ export default {
           const r = res.data
           if (r && r.data && r.status === 1) {
             this.$store.commit('account/setToken', r.data.token)
+            this.$store.commit('account/setUser', r.data.user)
             this.$router.push({ path: '/', query: { from: this.ajax.userType } })
           }
         })
@@ -162,6 +170,23 @@ export default {
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style scoped lang="less">
+@import url('../../assets/styles/base.less');
+.login {
+  height: 100%;
+  background-image: url('../../assets/loginBg.png');
+  background-repeat: no-repeat;
+  background-size: (750 / @base);
+}
+.loginBox {
+  padding: (30 / @base);
+  opacity: 0.8;
+  margin: (100 / @base) (30 / @base);
+  background: #fff;
+  border-radius: (11 / @base);
+}
+.loginBtn {
+  text-align: center;
+}
 .login .radio .mint-cell {
   float: left;
 }
