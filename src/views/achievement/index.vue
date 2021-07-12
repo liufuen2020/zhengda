@@ -41,6 +41,20 @@
       </div>
     </mt-popup>
     <mt-popup v-model="popupVisible2" position="top" class="mint-popup2">
+      <mt-cell title="考试学年">
+        <select>
+          <option>232324</option>
+          <option>232324</option>
+          <option>232324</option>
+          <option>232324</option>
+        </select>
+      </mt-cell>
+      <mt-cell title="考试学期" :value="detailData.kcmc || '--'"></mt-cell>
+      <mt-cell title="考试类别" :value="detailData.kkyxmc || '--'"></mt-cell>
+      <mt-cell title="考试性质" :value="detailData.kkyxmc || '--'"></mt-cell>
+      <mt-field label="用户名" placeholder="请输入用户名" v-model="username"></mt-field>
+      <mt-field label="用户名" placeholder="请输入用户名" v-model="username"></mt-field>
+      <mt-field label="用户名" placeholder="请输入用户名" v-model="username"></mt-field>
       <mt-button @click="popupVisible2 = false" size="large" type="primary">查询</mt-button>
     </mt-popup>
   </div>
@@ -194,6 +208,16 @@ export default {
   .mint-popup2 {
     width: 100%;
     height: auto;
+    button {
+      width: 50%;
+      margin: (30 / @base) auto;
+    }
+  }
+  select {
+    border: none;
+    background: none;
+    font-size: inherit;
+    width: 100%;
   }
 }
 </style>

@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import axios from 'axios'
 import store from '../store'
-import Router from 'vue-router'
 import local from './localstorage'
 
 let instance = axios.create({})
@@ -19,22 +18,21 @@ instance.interceptors.request.use(
   }
 )
 
-const router = new Router()
 instance.interceptors.response.use(
   (response) => {
     //拦截响应，做统一处理
     if (response.data.status) {
       const status = response.data.status
-      console.log(Router)
       switch (status) {
         case 403:
           local.clear()
-          router.push({
-            path: '/login'
-            // query: {
-            //   redirect: router.currentRoute.fullPath
-            // }
-          })
+          window.location.href = '/login'
+        // router.push({
+        //   path: '/login'
+        //   // query: {
+        //   //   redirect: router.currentRoute.fullPath
+        //   // }
+        // })
       }
     }
     return response

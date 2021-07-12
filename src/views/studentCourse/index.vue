@@ -13,7 +13,7 @@
       </select>
     </div>
 
-    <div class="week" v-for="(item, index) in week">
+    <div class="week" v-if="weekData" v-for="(item, index) in week">
       <div class="title">{{ item.value }}</div>
       <table>
         <tr>
@@ -63,7 +63,7 @@
         <tr>
           <th>9-10</th>
           <td>
-            <p v-if="weekData[4] && weekData[4][item.name]" v-for="(items, index) in weekData[4][item.name]">
+            <p v-if="weekData[4] && weekData[4][item.name]" v-for="(items, index) in weekData[0][item.name]">
               {{ items.kcmc }}
               <span
                 >{{ items.ksz }}-{{ items.jsz }}({{ items.skzlxmc }} ) {{ items.rkjsmc }} {{ items.classroomNo }}</span
@@ -98,7 +98,7 @@ export default {
       ],
       ajax: {
         kkxqm: '',
-        kkxn: []
+        kkxn: ''
       },
       weekData: ''
     }
@@ -167,12 +167,15 @@ export default {
     }
   },
   mounted() {
-    let that = this
     this.$watch('ajax.kkxqm', function() {
-      that.getStudentClientInfo()
+      if (this.ajax.kkxn && this.ajax.kkxqm) {
+        this.getStudentClientInfo()
+      }
     })
     this.$watch('ajax.kkxn', function() {
-      that.getStudentClientInfo()
+      if (this.ajax.kkxn && this.ajax.kkxqm) {
+        this.getStudentClientInfo()
+      }
     })
     this.getTYPE0125()
     this.getTYPE0072()
