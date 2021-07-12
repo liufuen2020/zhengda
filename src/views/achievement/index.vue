@@ -1,7 +1,7 @@
 <template>
-  <div class="research">
-    <div class="mainTitle">科研成果信息</div>
-
+  <div class="achievement">
+    <div class="mainTitle">学生总成绩单</div>
+    <div class="topBtn"><mt-button @click="popupVisible2 = true" size="large" type="primary">条件查询</mt-button></div>
     <mt-loadmore
       v-if="infoData"
       :auto-fill="false"
@@ -13,30 +13,42 @@
       <ul class="list">
         <li v-for="(item, index) in infoData" @click="goDetail(item)">
           <span class="key">{{ index + 1 }}</span>
-          <div class="con">{{ item.lwtm }}</div>
+          <div class="con">{{ item.cjlrrbh }} {{ item.kcmc }}}</div>
           <span class="go link">&gt;</span>
         </li>
       </ul>
     </mt-loadmore>
-    <!-- <Detail :detailData="detailData" :popupVisible="popupVisible" /> -->
     <mt-popup position="right" class="mint-popup" v-model="popupVisible">
       <div class="popupCon">
         <mt-button @click="popupVisible = false" size="large" type="primary">关闭</mt-button>
-        <mt-cell title="论文题目" :value="detailData.lwtm || '--'"></mt-cell>
-        <mt-cell title="论文主题词" :value="detailData.lwztc || '--'"></mt-cell>
-        <mt-cell title="刊物名称" :value="detailData.kwmc || '--'"></mt-cell>
-        <mt-cell title="影响因子" :value="detailData.yxyz || '--'"></mt-cell>
-        <mt-cell title="发表时间" :value="detailData.lwfbsj || '--'"></mt-cell>
-        <mt-cell title="导师审核状态" :value="detailData.dsshztmc || '--'"></mt-cell>
-        <mt-cell title="院系审核结果" :value="detailData.shztmc || '--'"></mt-cell>
+        <mt-cell title="课程代码" :value="detailData.cjlrrbh || '--'"></mt-cell>
+        <mt-cell title="课程名称" :value="detailData.kcmc || '--'"></mt-cell>
+        <mt-cell title="开课院系" :value="detailData.kkyxmc || '--'"></mt-cell>
+        <mt-cell title="考试学年" :value="detailData.ksxqmc || '--'"></mt-cell>
+        <mt-cell title="考试学期" :value="detailData.ksxqmc || '--'"></mt-cell>
+        <mt-cell title="考试性质" :value="detailData.ksxzmc || '--'"></mt-cell>
+        <mt-cell title="考试类别" :value="detailData.kslbmc || '--'"></mt-cell>
+        <mt-cell title="成绩" :value="detailData.kscj || '--'"></mt-cell>
+        <mt-cell title="成绩类型" :value="detailData.cjlxmc || '--'"></mt-cell>
+        <mt-cell title="学分" :value="detailData.kcxf || '--'"></mt-cell>
+        <mt-cell
+          title="考试日期"
+          :value="(detailData.ksrq && this.$moment(detailData.ksrq).format('YYYY-MM-DD')) || '--'"
+        ></mt-cell>
+        <mt-cell title="成绩状态" :value="detailData.cjztmc || '--'"></mt-cell>
+        <mt-cell title="修课状态" :value="detailData.xkztmc || '--'"></mt-cell>
+        <mt-cell title="备注" :value="detailData.note || '--'"></mt-cell>
       </div>
+    </mt-popup>
+    <mt-popup v-model="popupVisible2" position="top" class="mint-popup2">
+      <mt-button @click="popupVisible2 = false" size="large" type="primary">查询</mt-button>
     </mt-popup>
   </div>
 </template>
 
 <script>
 import request from '@/utils/request'
-import { lwxxList } from '@/api'
+import { xsList } from '@/api'
 import { Indicator, Toast } from 'mint-ui'
 // import Detail from '@/components/detail.vue'
 
@@ -49,9 +61,10 @@ export default {
       allLoaded: false,
       total: 0,
       currentPage: 1, //当前页面
-      payload: { pageSize: 10, pageNum: 1 },
+      payload: { pageSize: 10, pageNum: 1, ksxn: '', ksxq: '', kslb: '', ksxz: '', kcdm: '', kcmc: '' },
       detailData: {},
-      popupVisible: false
+      popupVisible: false,
+      popupVisible2: false
     }
   },
   methods: {
@@ -78,7 +91,7 @@ export default {
       const param = this.payload
       request({
         method: 'post',
-        url: lwxxList,
+        url: xsList,
         data: param,
         transformRequest: [
           function(data) {
@@ -116,6 +129,7 @@ export default {
     }
   },
   mounted() {
+    console.log(111, this.$mount)
     this.getStudentClientInfo()
   }
 }
@@ -123,16 +137,16 @@ export default {
 
 <style scoped lang="less">
 @import url('../../assets/styles/base.less');
-.research {
+.achievement {
   .list {
     height: 100%;
     padding: (20 / @base);
     li {
       padding: (15 / @base);
       padding-right: (35 / @base);
-
       position: relative;
       line-height: (40 / @base);
+      min-height: (40 / @base);
       span.key {
         position: absolute;
         display: inline-block;
@@ -166,6 +180,20 @@ export default {
         top: (10 / @base);
       }
     }
+  }
+  .topBtn {
+    text-align: right;
+    width: 100%;
+    overflow: hidden;
+    button {
+      float: right;
+      margin-right: (20 / @base);
+      width: (300 / @base);
+    }
+  }
+  .mint-popup2 {
+    width: 100%;
+    height: auto;
   }
 }
 </style>

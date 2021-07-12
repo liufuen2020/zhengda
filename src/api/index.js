@@ -12,3 +12,5 @@ export const zqkhxxInfo = '/api/studentClient/zqkhxx/info' //中期考核
 export const querySelectedPkxxTable = '/api/studentClient/querySelectedPkxxTable' //课程表
 export const TYPE0125 = '/api/upms/dictionary/findByTypeCode/TYPE0125' // 日期
 export const TYPE0072 = '/api/upms/dictionary/findByTypeCode/TYPE0072' //  季节
+
+export const xsList = '/api/studentClient/xsList' // 成绩查询

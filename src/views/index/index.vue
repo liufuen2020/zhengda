@@ -34,7 +34,8 @@ export default {
         },
         {
           name: '学生总成绩单',
-          id: '4'
+          id: '4',
+          path: '/index/achievement'
         },
         {
           name: '开题报告信息',

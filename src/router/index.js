@@ -1,7 +1,6 @@
 import Vue from 'vue'
 import Router from 'vue-router'
 import local from '@/utils/localstorage'
-import HelloWorld from '@/components/HelloWorld'
 import Login from '@/views/login'
 import Index from '@/views/index'
 import UserInfo from '@/views/userInfo'
@@ -11,6 +10,7 @@ import Research from '@/views/research'
 import MidExam from '@/views/midExam'
 import Reply from '@/views/reply'
 import StudentCourse from '@/views/studentCourse'
+import Achievement from '@/views/achievement'
 
 Vue.use(Router)
 
@@ -98,6 +98,15 @@ const RouterList = [
     component: StudentCourse,
     meta: {
       title: '课程表',
+      isLogin: true
+    }
+  },
+  {
+    path: '/index/achievement', // 学生总成绩单
+    name: 'achievement',
+    component: Achievement,
+    meta: {
+      title: '学生总成绩单',
       isLogin: true
     }
   }

@@ -1,5 +1,7 @@
+import Vue from 'vue'
 import axios from 'axios'
 import store from '../store'
+import Router from 'vue-router'
 import local from './localstorage'
 
 let instance = axios.create({})
@@ -17,21 +19,24 @@ instance.interceptors.request.use(
   }
 )
 
+const router = new Router()
 instance.interceptors.response.use(
   (response) => {
     //拦截响应，做统一处理
-    // if (response.data.code) {
-    //   switch (response.data.code) {
-    //     case 1002:
-    //       store.state.isLogin = false
-    //       router.replace({
-    //         path: 'login',
-    //         query: {
-    //           redirect: router.currentRoute.fullPath
-    //         }
-    //       })
-    //   }
-    // }
+    if (response.data.status) {
+      const status = response.data.status
+      console.log(Router)
+      switch (status) {
+        case 403:
+          local.clear()
+          router.push({
+            path: '/login'
+            // query: {
+            //   redirect: router.currentRoute.fullPath
+            // }
+          })
+      }
+    }
     return response
   },
   //接口错误状态处理，也就是说无响应时的处理

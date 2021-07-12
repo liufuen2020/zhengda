@@ -1,15 +1,6 @@
 <template>
   <div class="studentCourse">
     <div class="mainTitle">学生课表信息</div>
-    <div v-if="!!infoData" class="infoBox">
-      <!-- <mt-cell title="姓名" :value="infoData.xm"></mt-cell>
-      <mt-cell title="学号" :value="infoData.xh"></mt-cell>
-      <mt-cell title="学生类别" :value="infoData.xslbmc"></mt-cell> -->
-      <!-- <mt-cell title="院系" :value="infoData.dwmc"></mt-cell>
-      <mt-cell title="专业" :value="infoData.zymc"></mt-cell>
-      <mt-cell title="研究方向" :value="infoData.pyfx || '--'"></mt-cell>
-      <mt-cell title="导师姓名" :value="infoData.dsxm"></mt-cell> -->
-    </div>
 
     <div class="selectBox g-mar-top20">
       开课学年：<select v-model="ajax.kkxn" @change="selectType">
@@ -28,7 +19,7 @@
         <tr>
           <th>1-2</th>
           <td>
-            <p v-if="weekData[0][item.name]" v-for="(items, index) in weekData[0][item.name]">
+            <p v-if="weekData[0] && weekData[0][item.name]" v-for="(items, index) in weekData[0][item.name]">
               {{ items.kcmc }}
               <span
                 >{{ items.ksz }}-{{ items.jsz }}({{ items.skzlxmc }} ) {{ items.rkjsmc }} {{ items.classroomNo }}</span
@@ -39,7 +30,7 @@
         <tr>
           <th>3-4</th>
           <td>
-            <p v-if="weekData[1][item.name]" v-for="(items, index) in weekData[0][item.name]">
+            <p v-if="weekData[1] && weekData[1][item.name]" v-for="(items, index) in weekData[1][item.name]">
               {{ items.kcmc }}
               <span
                 >{{ items.ksz }}-{{ items.jsz }}({{ items.skzlxmc }} ) {{ items.rkjsmc }} {{ items.classroomNo }}</span
@@ -50,7 +41,7 @@
         <tr>
           <th>5-6</th>
           <td>
-            <p v-if="weekData[2][item.name]" v-for="(items, index) in weekData[0][item.name]">
+            <p v-if="weekData[2] && weekData[2][item.name]" v-for="(items, index) in weekData[2][item.name]">
               {{ items.kcmc }}
               <span
                 >{{ items.ksz }}-{{ items.jsz }}({{ items.skzlxmc }} ) {{ items.rkjsmc }} {{ items.classroomNo }}</span
@@ -61,7 +52,7 @@
         <tr>
           <th>7-8</th>
           <td>
-            <p v-if="weekData[3][item.name]" v-for="(items, index) in weekData[0][item.name]">
+            <p v-if="weekData[3] && weekData[3][item.name]" v-for="(items, index) in weekData[3][item.name]">
               {{ items.kcmc }}
               <span
                 >{{ items.ksz }}-{{ items.jsz }}({{ items.skzlxmc }} ) {{ items.rkjsmc }} {{ items.classroomNo }}</span
@@ -72,7 +63,7 @@
         <tr>
           <th>9-10</th>
           <td>
-            <p v-if="weekData[4][item.name]" v-for="(items, index) in weekData[0][item.name]">
+            <p v-if="weekData[4] && weekData[4][item.name]" v-for="(items, index) in weekData[4][item.name]">
               {{ items.kcmc }}
               <span
                 >{{ items.ksz }}-{{ items.jsz }}({{ items.skzlxmc }} ) {{ items.rkjsmc }} {{ items.classroomNo }}</span
