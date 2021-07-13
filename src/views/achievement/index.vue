@@ -13,7 +13,7 @@
       <ul class="list">
         <li v-for="(item, index) in infoData" @click="goDetail(item)">
           <span class="key">{{ index + 1 }}</span>
-          <div class="con">{{ item.cjlrrbh }} {{ item.kcmc }}}</div>
+          <div class="con">{{ item.cjlrrbh }} {{ item.kcmc }}</div>
           <span class="go link">&gt;</span>
         </li>
       </ul>
@@ -41,33 +41,70 @@
       </div>
     </mt-popup>
     <mt-popup v-model="popupVisible2" position="top" class="mint-popup2">
-      <mt-cell title="考试学年">
-        <select>
-          <option>232324</option>
-          <option>232324</option>
-          <option>232324</option>
-          <option>232324</option>
-        </select>
-      </mt-cell>
-      <mt-cell title="考试学期" :value="detailData.kcmc || '--'"></mt-cell>
-      <mt-cell title="考试类别" :value="detailData.kkyxmc || '--'"></mt-cell>
-      <mt-cell title="考试性质" :value="detailData.kkyxmc || '--'"></mt-cell>
-      <mt-field label="用户名" placeholder="请输入用户名" v-model="username"></mt-field>
-      <mt-field label="用户名" placeholder="请输入用户名" v-model="username"></mt-field>
-      <mt-field label="用户名" placeholder="请输入用户名" v-model="username"></mt-field>
-      <mt-button @click="popupVisible2 = false" size="large" type="primary">查询</mt-button>
+      <ul class="g-inputList searchlayer">
+        <li>
+          <div class="g-inputlist-title">考试学年</div>
+          <div class="g-inputlist-content">
+            <select v-model="ajax.ksxn">
+              <option value="">选择考试学年</option>
+              <option :value="item.code" v-for="item in ksxnData">{{ item.name }}</option>
+            </select>
+          </div>
+        </li>
+        <li>
+          <div class="g-inputlist-title">考试学期</div>
+          <div class="g-inputlist-content">
+            <select v-model="ajax.ksxq">
+              <option value="">选择考试学期</option>
+              <option :value="item.code" v-for="item in ksxqData">{{ item.name }}</option>
+            </select>
+          </div>
+        </li>
+        <li>
+          <div class="g-inputlist-title">考试类别</div>
+          <div class="g-inputlist-content">
+            <select v-model="ajax.kslb">
+              <option value="">选择考试类别</option>
+              <option :value="item.code" v-for="item in kslbData">{{ item.name }}</option>
+            </select>
+          </div>
+        </li>
+        <li>
+          <div class="g-inputlist-title">考试性质</div>
+          <div class="g-inputlist-content">
+            <select v-model="ajax.ksxz">
+              <option value="">选择考试性质</option>
+              <option :value="item.code" v-for="item in ksxzData">{{ item.name }}</option>
+            </select>
+          </div>
+        </li>
+        <li>
+          <div class="g-inputlist-title">课程代码</div>
+          <div class="g-inputlist-content">
+            <input v-model="ajax.kcdm" placeholder="课程代码" maxlength="20" />
+          </div>
+        </li>
+        <li>
+          <div class="g-inputlist-title">课程名称</div>
+          <div class="g-inputlist-content">
+            <input v-model="ajax.kcmc" placeholder="课程名称" maxlength="20" />
+          </div>
+        </li>
+      </ul>
+      <div class="btnBox">
+        <mt-button @click="search" size="small" type="primary" style="width:40%">查询</mt-button>
+        <mt-button @click="search('reset')" type="danger" size="small">重置</mt-button>
+      </div>
     </mt-popup>
   </div>
 </template>
 
 <script>
 import request from '@/utils/request'
-import { xsList } from '@/api'
+import { xsList, TYPE0109, TYPE0125, TYPE0358, TYPE0072 } from '@/api'
 import { Indicator, Toast } from 'mint-ui'
-// import Detail from '@/components/detail.vue'
 
 export default {
-  // components: { Detail },
   name: 'research',
   data() {
     return {
@@ -75,10 +112,14 @@ export default {
       allLoaded: false,
       total: 0,
       currentPage: 1, //当前页面
-      payload: { pageSize: 10, pageNum: 1, ksxn: '', ksxq: '', kslb: '', ksxz: '', kcdm: '', kcmc: '' },
+      ajax: { pageSize: 10, pageNum: 1, ksxn: '', ksxq: '', kslb: '', ksxz: '', kcdm: '', kcmc: '' },
       detailData: {},
       popupVisible: false,
-      popupVisible2: false
+      popupVisible2: false,
+      ksxnData: [],
+      ksxqData: [],
+      kslbData: [],
+      ksxzData: []
     }
   },
   methods: {
@@ -92,17 +133,17 @@ export default {
       this.getStudentClientInfo('up')
     },
     getStudentClientInfo(type) {
-      this.payload.pageNum = this.currentPage
-      if (type !== 'down' && this.total > this.payload.pageSize * this.payload.pageNum) {
-        this.payload.pageNum++
+      this.ajax.pageNum = this.currentPage
+      if (type === 'up' && this.total > this.ajax.pageSize * this.ajax.pageNum) {
+        this.ajax.pageNum++
       }
 
-      if (type === 'down' && this.payload.pageNum > 1) {
-        this.payload.pageNum--
+      if (type === 'down' && this.ajax.pageNum > 1) {
+        this.ajax.pageNum--
       }
 
       Indicator.open()
-      const param = this.payload
+      const param = this.ajax
       request({
         method: 'post',
         url: xsList,
@@ -127,7 +168,7 @@ export default {
           if (r && r.data && r.data.rows) {
             this.infoData = r.data.rows
             this.total = r.data.total
-            this.currentPage = this.payload.pageNum
+            this.currentPage = this.ajax.pageNum
             Toast({
               message: '第（' + this.currentPage + '）页',
               duration: 1500
@@ -140,10 +181,65 @@ export default {
     goDetail(item) {
       this.detailData = item
       this.popupVisible = true
+    },
+    getTYPE0125() {
+      request
+        .get(TYPE0125, {})
+        .then((res) => {
+          const r = res.data
+          if (r && r.data) {
+            this.ksxnData = r.data
+          }
+        })
+        .catch((err) => {})
+    },
+    getTYPE0072() {
+      request
+        .get(TYPE0072, {})
+        .then((res) => {
+          const r = res.data
+          if (r && r.data) {
+            this.ksxqData = r.data
+          }
+        })
+        .catch((err) => {})
+    },
+    getTYPE0109() {
+      request
+        .get(TYPE0109, {})
+        .then((res) => {
+          const r = res.data
+          if (r && r.data) {
+            this.kslbData = r.data
+          }
+        })
+        .catch((err) => {})
+    },
+    getTYPE0358() {
+      request
+        .get(TYPE0358, {})
+        .then((res) => {
+          const r = res.data
+          if (r && r.data) {
+            this.ksxzData = r.data
+          }
+        })
+        .catch((err) => {})
+    },
+    search(type) {
+      this.popupVisible2 = false
+      this.pageNum = 1
+      if (type === 'reset') {
+        this.ajax = { ...this.ajax, pageNum: 1, ksxn: '', ksxq: '', kslb: '', ksxz: '', kcdm: '', kcmc: '' }
+      }
+      this.getStudentClientInfo(type)
     }
   },
   mounted() {
-    console.log(111, this.$mount)
+    this.getTYPE0125()
+    this.getTYPE0072()
+    this.getTYPE0109()
+    this.getTYPE0358()
     this.getStudentClientInfo()
   }
 }
@@ -194,8 +290,11 @@ export default {
   .mint-popup2 {
     width: 100%;
     height: auto;
+    .btnBox {
+      text-align: center;
+    }
     button {
-      width: 50%;
+      width: 20%;
       margin: (30 / @base) auto;
     }
   }
@@ -204,6 +303,9 @@ export default {
     background: none;
     font-size: inherit;
     width: 100%;
+  }
+  .searchlayer {
+    padding: (30 / @base) (15 / @base);
   }
 }
 </style>

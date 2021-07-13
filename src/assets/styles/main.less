@@ -104,3 +104,35 @@
   text-align: center;
   font-weight: 500;
 }
+.g-inputList {
+  li {
+    position: relative;
+    padding-left: (200 / @base);
+    height: (70 / @base);
+    border-bottom: 1px solid #d9d9d9;
+    .g-inputlist-title {
+      position: absolute;
+      top: 0;
+      left: 0;
+      line-height: (70 / @base);
+      width: (200 / @base);
+    }
+    .g-inputlist-content {
+      color: #888;
+      input,
+      select {
+        font-size: inherit;
+        color: #888;
+        padding: 0;
+        margin: 0;
+        border: 0;
+        height: (70 / @base);
+        background-color: none;
+      }
+      input::-webkit-input-placeholder {
+        font-size: (28 / @base);
+        color: #888;
+      }
+    }
+  }
+}
