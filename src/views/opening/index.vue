@@ -122,6 +122,7 @@ export default {
     }
     padding: (20 / @base) (15 / @base);
     p {
+      color: #888;
       font-weight: normal;
     }
   }

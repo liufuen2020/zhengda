@@ -1,6 +1,11 @@
 <template>
   <div class="resume">
     <div class="mainTitle">培养计划信息</div>
+
+    <div v-if="noData" class="noData">
+      暂无数据
+    </div>
+
     <div v-if="!!infoData" class="infoBox">
       <mt-cell title="姓名" :value="infoData.xm"></mt-cell>
       <mt-cell title="学号" :value="infoData.xh"></mt-cell>
@@ -52,6 +57,7 @@ export default {
   name: 'resume',
   data() {
     return {
+      noData: false,
       detailData: '',
       infoData: '',
       courseData: '',
@@ -71,6 +77,8 @@ export default {
             this.infoData = r.data.pyjh || {}
             this.courseData = r.data.pyjhkcList || []
             this.processData = r.data.pyjhPkcList || []
+          } else {
+            this.noData = true
           }
         })
         .catch((err) => {})

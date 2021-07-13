@@ -59,7 +59,8 @@ export default {
         },
         {
           name: '毕业论文信息',
-          id: '9'
+          id: '9',
+          path: '/index/paper'
         }
       ]
     }

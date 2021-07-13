@@ -2,7 +2,7 @@
   <div class="studentCourse">
     <div class="mainTitle">学生课表信息</div>
 
-    <div class="selectBox g-mar-top20">
+    <!-- <div class="selectBox g-mar-top20">
       开课学年：<select v-model="ajax.kkxn" @change="selectType">
         <option v-for="item in yearData" :value="item">{{ item }}</option>
       </select>
@@ -11,7 +11,25 @@
       开课学期：<select v-model="ajax.kkxqm" @change="selectType">
         <option v-for="item in kkxqmData" :value="item.code">{{ item.name }}</option>
       </select>
-    </div>
+    </div> -->
+    <ul class="g-inputList searchlayer">
+      <li>
+        <div class="g-inputlist-title">考试学年</div>
+        <div class="g-inputlist-content">
+          <select v-model="ajax.kkxn">
+            <option :value="item" v-for="item in yearData">{{ item }}</option>
+          </select>
+        </div>
+      </li>
+      <li>
+        <div class="g-inputlist-title">开课学期</div>
+        <div class="g-inputlist-content">
+          <select v-model="ajax.kkxqm">
+            <option :value="item.code" v-for="item in kkxqmData">{{ item.name }}</option>
+          </select>
+        </div>
+      </li>
+    </ul>
 
     <div class="week" v-if="weekData" v-for="(item, index) in week">
       <div class="title">{{ item.value }}</div>
@@ -161,9 +179,6 @@ export default {
           }
         })
         .catch((err) => {})
-    },
-    selectType() {
-      // this.getStudentClientInfo()
     }
   },
   mounted() {
@@ -214,7 +229,7 @@ export default {
     }
   }
   .week {
-    margin: (20 / @base);
+    margin: (20 / @base) (15 / @base);
     .title {
       padding-left: (10 / @base);
       line-height: (50 / @base);
@@ -247,16 +262,14 @@ export default {
       color: #999;
     }
   }
-  .selectBox {
-    line-height: (40 / @base);
-    padding: (15 / @base);
-    select {
-      border-radius: (3 / @base);
-      height: (40 / @base);
-      background: none;
-      border: 1px solid #999;
-      width: 60%;
-    }
+  select {
+    border: none;
+    background: none;
+    font-size: inherit;
+    width: 100%;
+  }
+  .searchlayer {
+    padding: (30 / @base) (15 / @base);
   }
 }
 </style>

@@ -18,6 +18,9 @@
         </li>
       </ul>
     </mt-loadmore>
+    <div v-if="infoData && total === 0" class="noData">
+      暂无数据
+    </div>
     <mt-popup position="right" class="mint-popup" v-model="popupVisible">
       <div class="popupCon">
         <mt-button @click="popupVisible = false" size="large" type="primary">关闭</mt-button>

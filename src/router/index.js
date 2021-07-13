@@ -11,6 +11,7 @@ import MidExam from '@/views/midExam'
 import Reply from '@/views/reply'
 import StudentCourse from '@/views/studentCourse'
 import Achievement from '@/views/achievement'
+import Paper from '@/views/paper'
 
 Vue.use(Router)
 
@@ -105,6 +106,15 @@ const RouterList = [
     path: '/index/achievement', // 学生总成绩单
     name: 'achievement',
     component: Achievement,
+    meta: {
+      title: '学生总成绩单',
+      isLogin: true
+    }
+  },
+  {
+    path: '/index/paper', // 学生总成绩单
+    name: 'paper',
+    component: Paper,
     meta: {
       title: '学生总成绩单',
       isLogin: true
