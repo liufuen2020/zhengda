@@ -14,71 +14,32 @@
     <div v-if="!!courseData" class="courseData" v-for="(item, index) in courseData">
       <mt-cell :title="item.kcdm">
         <span>{{ item.kclxmc }}</span>
-        <a @click="detail(index)" class="link">详情</a>
+        <a @click="detail(item)" class="link">详情</a>
       </mt-cell>
-      <div></div>
-      <div v-if="courseData[index].show" class="infoTable">
-        <table>
-          <tr>
-            <th>学时</th>
-            <td>{{ item.xs }}</td>
-            <th>学分</th>
-            <td>{{ item.xf }}</td>
-          </tr>
-          <tr>
-            <th>修课要求</th>
-            <td>{{ item.bxhxxmc }}</td>
-            <th>是否学位课</th>
-            <td>{{ item.sfxwkmc }}</td>
-          </tr>
-          <tr>
-            <th>导师审核状态</th>
-            <td>{{ item.kcshztmc }}</td>
-            <th>课程类别</th>
-            <td>{{ item.kclxmc }}</td>
-          </tr>
-          <tr>
-            <th>审核意见</th>
-            <td colspan="3">{{ item.shyj }}</td>
-          </tr>
-        </table>
-      </div>
     </div>
 
     <div v-if="!!courseData" class="mainTitle g-mar-top30 g-mar-bottom20">培养过程</div>
     <div v-if="!!courseData" class="courseData" v-for="(item, index) in processData">
       <mt-cell :title="item.kcdm">
         <span>{{ item.kclxmc }}</span>
-        <a @click="processDetail(index)" class="link">详情</a>
+        <a @click="detail(item)" class="link">详情</a>
       </mt-cell>
-      <div></div>
-      <div v-if="processData[index].show" class="infoTable">
-        <table>
-          <tr>
-            <th>学时</th>
-            <td>{{ item.xs }}</td>
-            <th>学分</th>
-            <td>{{ item.xf }}</td>
-          </tr>
-          <tr>
-            <th>修课要求</th>
-            <td>{{ item.bxhxxmc }}</td>
-            <th>是否学位课</th>
-            <td>{{ item.sfxwkmc }}</td>
-          </tr>
-          <tr>
-            <th>导师审核状态</th>
-            <td>{{ item.kcshztmc }}</td>
-            <th>课程类别</th>
-            <td>{{ item.kclxmc }}</td>
-          </tr>
-          <tr>
-            <th>审核意见</th>
-            <td colspan="3">{{ item.shyj }}</td>
-          </tr>
-        </table>
-      </div>
     </div>
+
+    <mt-popup position="right" class="mint-popup" v-model="popupVisible">
+      <div class="popupCon">
+        <mt-button @click="popupVisible = false" size="large" type="primary">关闭</mt-button>
+        <mt-cell title="课程代码" :value="detailData.kcdm || '--'"></mt-cell>
+        <mt-cell title="课程名称" :value="detailData.kclxmc || '--'"></mt-cell>
+        <mt-cell title="学时" :value="detailData.xs || '--'"></mt-cell>
+        <mt-cell title="学分" :value="detailData.xf || '--'"></mt-cell>
+        <mt-cell title="修课要求" :value="detailData.bxhxxmc || '--'"></mt-cell>
+        <mt-cell title="是否学位课" :value="detailData.sfxwkmc || '--'"></mt-cell>
+        <mt-cell title="导师审核状态" :value="detailData.kcshztmc || '--'"></mt-cell>
+        <mt-cell title="课程类别" :value="detailData.kclxmc || '--'"></mt-cell>
+        <mt-cell title="审核意见" :value="detailData.shyj || '--'"></mt-cell>
+      </div>
+    </mt-popup>
   </div>
 </template>
 
@@ -91,9 +52,11 @@ export default {
   name: 'resume',
   data() {
     return {
+      detailData: '',
       infoData: '',
       courseData: '',
-      processData: ''
+      processData: '',
+      popupVisible: false
     }
   },
   methods: {
@@ -112,13 +75,9 @@ export default {
         })
         .catch((err) => {})
     },
-    detail(index) {
-      const show = this.courseData[index].show !== true ? true : false
-      this.$set(this.courseData, index, { ...this.courseData[index], show: show })
-    },
-    processDetail(index) {
-      const show = this.processData[index].show !== true ? true : false
-      this.$set(this.processData, index, { ...this.processData[index], show: show })
+    detail(item) {
+      this.detailData = item
+      this.popupVisible = true
     }
   },
   mounted() {

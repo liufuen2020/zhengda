@@ -21,12 +21,12 @@
 
       <div class="itemBox">
         <div class="title">选题依据及意义</div>
-        <p v-html="infoData.xtyy && infoData.xtyy.replace(/\n|\r\n/g, '<br/>')"></p>
+        <p v-html="(infoData.xtyy && infoData.xtyy.replace(/\n|\r\n/g, '<br/>')) || '--'"></p>
       </div>
 
       <div class="itemBox">
         <div class="title">所要解决的主要问题及研究途径与方法（预期思路与技术路线）</div>
-        <p v-html="infoData.yqsl && infoData.yqsl.replace(/\n|\r\n/g, '<br/>')"></p>
+        <p v-html="(infoData.yqsl && infoData.yqsl.replace(/\n|\r\n/g, '<br/>')) || '--'"></p>
       </div>
 
       <div class="itemBox">
@@ -37,6 +37,7 @@
           <mt-cell title="预期结果" :value="item.yqjg || '--'"></mt-cell>
           <div class="line" v-if="infoData.yjjds.length - 1 != index"></div>
         </div>
+        <div v-if="!infoData || (infoData && !infoData.yjjds) || (infoData && infoData.yjjds.length == 0)">--</div>
       </div>
     </div>
   </div>
@@ -87,6 +88,8 @@ export default {
 @import url('../../assets/styles/base.less');
 .resume {
   padding-top: (20 / @base);
+  padding-bottom: (40 / @base);
+
   .infoBox {
     margin-top: (20 / @base);
   }

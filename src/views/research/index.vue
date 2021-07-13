@@ -3,7 +3,7 @@
     <div class="mainTitle">科研成果信息</div>
 
     <mt-loadmore
-      v-if="infoData"
+      v-if="infoData && total > 0"
       :auto-fill="false"
       :top-method="loadTop"
       :bottom-method="loadBottom"
@@ -18,6 +18,11 @@
         </li>
       </ul>
     </mt-loadmore>
+
+    <div v-if="infoData && total == 0" class="noData">
+      暂无数据
+    </div>
+
     <!-- <Detail :detailData="detailData" :popupVisible="popupVisible" /> -->
     <mt-popup position="right" class="mint-popup" v-model="popupVisible">
       <div class="popupCon">
@@ -151,20 +156,6 @@ export default {
     }
     li:nth-child(2n + 1) {
       background: rgb(244, 244, 244);
-    }
-  }
-  .mint-popup {
-    width: 100%;
-    height: 100%;
-    .popupCon {
-      padding-top: (110 / @base);
-      position: relative;
-      button {
-        position: fixed;
-        right: (10 / @base);
-        width: (160 / @base);
-        top: (10 / @base);
-      }
     }
   }
 }

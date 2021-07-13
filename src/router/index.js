@@ -115,10 +115,10 @@ const RouterList = [
 const router = new Router({
   routes: RouterList
 })
-local.set(
-  'USER_TOKEN',
-  'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI0YjJmYjgzYTIyNmRjNGYyNWNiMGFiZTBjOTQ2MTY4MyIsImV4cCI6MTYyNjE2OTY2NCwiaWF0IjoxNjI2MDgzMjY0fQ.5iL3QsVWcPWA_7-bDXXSL1-bvuwi0NmCci2D2Y7prAiCLm8PZRCftPptUD0fRXWeareZ0E1yrP2P9DZVZEBSig'
-)
+// local.set(
+//   'USER_TOKEN',
+//   'Bearer eyJhbGciOiJIUzUxMiJ9.eyJzdWIiOiI0YjJmYjgzYTIyNmRjNGYyNWNiMGFiZTBjOTQ2MTY4MyIsImV4cCI6MTYyNjE2OTY2NCwiaWF0IjoxNjI2MDgzMjY0fQ.5iL3QsVWcPWA_7-bDXXSL1-bvuwi0NmCci2D2Y7prAiCLm8PZRCftPptUD0fRXWeareZ0E1yrP2P9DZVZEBSig'
+// )
 // 路由守卫
 router.beforeEach((to, from, next) => {
   if (local.get('USER_TOKEN') && to.name === 'Login') {

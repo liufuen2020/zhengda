@@ -82,3 +82,25 @@
     width: 100%;
   }
 }
+
+.mint-popup {
+  width: 100%;
+  height: 100%;
+  z-index: 100;
+  overflow-x: auto;
+  .popupCon {
+    padding-top: (110 / @base);
+    position: relative;
+    button {
+      position: fixed;
+      right: (10 / @base);
+      width: (160 / @base);
+      top: (10 / @base);
+    }
+  }
+}
+.noData {
+  margin: (100 / @base);
+  text-align: center;
+  font-weight: 500;
+}

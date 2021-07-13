@@ -9,6 +9,23 @@
       <mt-cell title="专业" :value="infoData.zymc"></mt-cell>
       <mt-cell title="研究方向" :value="infoData.pyfx || '--'"></mt-cell>
       <mt-cell title="导师姓名" :value="infoData.dsxm"></mt-cell>
+      <div class="line"></div>
+      <div v-if="zqkhData.grpzzj" class="infoDetail">
+        <div class="title">一、思想品德、行为表现、综合素质</div>
+        <div class="con" v-html="zqkhData.grpzzj"></div>
+      </div>
+      <div v-if="zqkhData.kyqkzj" class="infoDetail">
+        <div class="title">二、参加科研项目、学术会议及发表论文情况</div>
+        <div class="con" v-html="zqkhData.kyqkzj"></div>
+      </div>
+      <div v-if="zqkhData.jlqk" class="infoDetail">
+        <div class="title">三、奖惩情况</div>
+        <div class="con" v-html="zqkhData.jlqk"></div>
+      </div>
+      <div v-if="zqkhData.sxzk" class="infoDetail">
+        <div class="title">四、身心状况</div>
+        <div class="con" v-html="zqkhData.sxzk"></div>
+      </div>
     </div>
   </div>
 </template>
@@ -24,8 +41,7 @@ export default {
   data() {
     return {
       infoData: '',
-      courseData: '',
-      processData: ''
+      zqkhData: ''
     }
   },
   methods: {
@@ -36,6 +52,7 @@ export default {
         .then((res) => {
           Indicator.close()
           const r = res.data
+          this.getStudentClientQkhxxInfo()
           if (r && r.data) {
             this.infoData = r.data || {}
           }
@@ -50,6 +67,7 @@ export default {
           Indicator.close()
           const r = res.data
           if (r && r.data) {
+            this.zqkhData = r.data || {}
           }
         })
         .catch((err) => {})
@@ -57,7 +75,6 @@ export default {
   },
   mounted() {
     this.getStudentClientInfo()
-    this.getStudentClientQkhxxInfo()
   }
 }
 </script>
@@ -65,6 +82,7 @@ export default {
 <style scoped lang="less">
 @import url('../../assets/styles/base.less');
 .resume {
+  padding-bottom: (50 / @base);
   padding-top: (20 / @base);
   .infoBox {
     margin-top: (20 / @base);
@@ -89,6 +107,16 @@ export default {
     }
     th {
       color: #999;
+    }
+  }
+  .infoDetail {
+    margin: (30 / @base) (20 / @base);
+    .title {
+      margin-bottom: (15 / @base);
+    }
+    .con {
+      color: #888;
+      line-height: (42 / @base);
     }
   }
 }

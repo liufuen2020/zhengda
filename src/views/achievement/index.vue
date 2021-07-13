@@ -181,20 +181,6 @@ export default {
       background: rgb(244, 244, 244);
     }
   }
-  .mint-popup {
-    width: 100%;
-    height: 100%;
-    .popupCon {
-      padding-top: (110 / @base);
-      position: relative;
-      button {
-        position: fixed;
-        right: (10 / @base);
-        width: (160 / @base);
-        top: (10 / @base);
-      }
-    }
-  }
   .topBtn {
     text-align: right;
     width: 100%;
