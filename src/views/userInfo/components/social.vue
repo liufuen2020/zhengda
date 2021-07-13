@@ -1,6 +1,10 @@
 <template>
   <div class="resume">
-    <div v-if="!!resumeData" class="infoBox" v-for="(item, index) in resumeData">
+    <div v-if="resumeData && resumeData.length === 0" class="noData">
+      暂无数据
+    </div>
+
+    <div v-if="resumeData && resumeData.length > 0" class="infoBox" v-for="(item, index) in resumeData">
       <mt-cell title="姓名" :value="item.cyxm"></mt-cell>
       <mt-cell title="出生日期" :value="item.csny"></mt-cell>
       <mt-cell title="与本人关系" :value="item.gxmc"></mt-cell>
@@ -26,15 +30,13 @@ export default {
   },
   methods: {
     getStudentClientInfo() {
-      Indicator.open()
+      //Indicator.open()
       request
         .get(studentClientFamillys, {})
         .then((res) => {
-          Indicator.close()
+          //Indicator.close()
           const r = res.data
-          if (r && r.data) {
-            this.resumeData = r.data
-          }
+          this.resumeData = r.data || []
         })
         .catch((err) => {})
     }
