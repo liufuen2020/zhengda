@@ -29,17 +29,18 @@
     <div class="loginBox" v-if="loginTab === 2">
       <div>
         <mt-field label="手机号" placeholder="请输入手机号" v-model.trim="sjh" :attr="{ maxlength: 11 }"></mt-field>
-        <mt-field label="验证码" v-model="ajax.yzm" placeholder="输入验证码">
+        <mt-field label="验证码" v-model.trim="telAjax.yzm" :attr="{ maxlength: 4 }" placeholder="输入验证码">
           <span class="link" @click="getTelCode" v-if="time === 0">获取验证码</span>
           <span v-if="time !== 0"> {{ time }}s</span>
         </mt-field>
-        <mt-radio v-model="ajax.userType" :options="options" class="radio"> </mt-radio>
+        <mt-radio v-model="telAjax.userType" :options="options" class="radio"> </mt-radio>
       </div>
     </div>
     <div class="telTab" @click="telTab">
       <span>{{ loginTab === 2 ? '使用账号密码登录' : '使用手机号快捷登录' }}</span>
     </div>
-    <div class="loginBtn"><mt-button type="primary" @click="sendLogin">登录</mt-button></div>
+    <div class="loginBtn" v-if="loginTab === 1"><mt-button type="primary" @click="sendLogin">登录</mt-button></div>
+    <div class="loginBtn" v-if="loginTab === 2"><mt-button type="primary" @click="telLogin">登录</mt-button></div>
   </div>
 </template>
 
@@ -52,10 +53,18 @@ export default {
   name: 'HelloWorld',
   data() {
     return {
-      loginTab: 2,
+      loginTab: 2, // 1 账号登录，2 手机号快捷登录
       captchaImg: '',
       sjh: '',
       time: 0,
+      telAjax: {
+        username: '',
+        yzm: '',
+        password: 1,
+        loginType: 'MOBILE',
+        userType: 'STUDENT',
+        uuid: ''
+      },
       ajax: {
         name: '',
         username: '',
@@ -218,19 +227,81 @@ export default {
       }).then((res) => {
         Indicator.close()
         const r = res.data || {}
+
         if (r.msg) {
           Toast({
             message: r.msg,
             duration: 2000
           })
         }
-        this.time = 60
-        let interval = window.setInterval(() => {
-          if (this.time-- <= 0) {
-            this.time = 0
-            window.clearInterval(interval)
+        if (r.status === 1) {
+          this.time = 60
+          let interval = window.setInterval(() => {
+            if (this.time-- <= 0) {
+              this.time = 0
+              window.clearInterval(interval)
+            }
+          }, 1000)
+          this.telAjax.uuid = (r.data && r.data.uuid) || ''
+        }
+      })
+    },
+    /**
+     * 手机号快捷登录
+     * author fuen
+     */
+    telLogin() {
+      if (!this.sjh) {
+        Toast({
+          message: '请输入手机号',
+          duration: 2000
+        })
+        return
+      }
+
+      if (!this.telAjax.yzm) {
+        Toast({
+          message: '请输入验证码',
+          duration: 2000
+        })
+        return
+      }
+
+      const payload = {
+        ...this.telAjax,
+        username: this.sjh
+      }
+      Indicator.open()
+      request({
+        method: 'post',
+        url: login,
+        data: payload,
+        transformRequest: [
+          function(data) {
+            let ret = ''
+            for (let it in data) {
+              ret += encodeURIComponent(it) + '=' + encodeURIComponent(data[it]) + '&'
+            }
+            ret = ret.substring(0, ret.lastIndexOf('&'))
+            return ret
           }
-        }, 1000)
+        ],
+        headers: {
+          'Content-Type': 'application/x-www-form-urlencoded'
+        }
+      }).then((res) => {
+        Indicator.close()
+        const r = res.data || {}
+        this.getCaptchaImg()
+        if (r.msg) {
+          Toast({
+            message: r.msg,
+            duration: 2000
+          })
+        }
+        if (r.status === 1 && r.token) {
+          this.getUserInfo(r.token)
+        }
       })
     },
     /**

@@ -1,6 +1,7 @@
 <template>
   <div class="research">
     <div class="mainTitle">科研成果信息</div>
+    <div class="topBtn"><mt-button @click="popupVisible2 = true" size="normal" type="primary">条件查询</mt-button></div>
 
     <mt-loadmore
       v-if="infoData && total > 0"
@@ -36,6 +37,21 @@
         <mt-cell title="院系审核结果" :value="detailData.shztmc || '--'"></mt-cell>
       </div>
     </mt-popup>
+
+    <mt-popup v-model="popupVisible2" position="top" class="mint-popup2">
+      <ul class="g-inputList searchlayer">
+        <li>
+          <div class="g-inputlist-title">论文题目</div>
+          <div class="g-inputlist-content">
+            <input v-model="payload.lwtm" placeholder="论文题目" maxlength="100" />
+          </div>
+        </li>
+      </ul>
+      <div class="btnBox">
+        <mt-button @click="search" size="small" type="primary" style="width:40%">查询</mt-button>
+        <mt-button @click="search('reset')" type="danger" size="small">重置</mt-button>
+      </div>
+    </mt-popup>
   </div>
 </template>
 
@@ -54,9 +70,10 @@ export default {
       allLoaded: false,
       total: 0,
       currentPage: 1, //当前页面
-      payload: { pageSize: 10, pageNum: 1 },
+      payload: { pageSize: 30, pageNum: 1, lwtm: '' },
       detailData: {},
-      popupVisible: false
+      popupVisible: false,
+      popupVisible2: false
     }
   },
   methods: {
@@ -71,7 +88,7 @@ export default {
     },
     getStudentClientInfo(type) {
       this.payload.pageNum = this.currentPage
-      if (type !== 'down' && this.total > this.payload.pageSize * this.payload.pageNum) {
+      if (type === 'up' && this.total > this.payload.pageSize * this.payload.pageNum) {
         this.payload.pageNum++
       }
 
@@ -118,6 +135,14 @@ export default {
     goDetail(item) {
       this.detailData = item
       this.popupVisible = true
+    },
+    search(type) {
+      this.popupVisible2 = false
+      this.pageNum = 1
+      if (type === 'reset') {
+        this.payload = { ...this.payload, pageNum: 1, lwtm: '' }
+      }
+      this.getStudentClientInfo(type)
     }
   },
   mounted() {
@@ -157,6 +182,30 @@ export default {
     li:nth-child(2n + 1) {
       background: rgb(244, 244, 244);
     }
+  }
+  .topBtn {
+    text-align: right;
+    width: 100%;
+    overflow: hidden;
+    button {
+      float: right;
+      margin-right: (20 / @base);
+      width: (300 / @base);
+    }
+  }
+  .mint-popup2 {
+    width: 100%;
+    height: auto;
+    .btnBox {
+      text-align: center;
+    }
+    button {
+      width: 20%;
+      margin: (30 / @base) auto;
+    }
+  }
+  .searchlayer {
+    padding: (30 / @base) (15 / @base);
   }
 }
 </style>

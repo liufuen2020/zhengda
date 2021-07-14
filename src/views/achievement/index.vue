@@ -1,7 +1,7 @@
 <template>
   <div class="achievement">
     <div class="mainTitle">学生总成绩单</div>
-    <div class="topBtn"><mt-button @click="popupVisible2 = true" size="large" type="primary">条件查询</mt-button></div>
+    <div class="topBtn"><mt-button @click="popupVisible2 = true" size="normal" type="primary">条件查询</mt-button></div>
     <mt-loadmore
       v-if="infoData"
       :auto-fill="false"
@@ -23,7 +23,7 @@
     </div>
     <mt-popup position="right" class="mint-popup" v-model="popupVisible">
       <div class="popupCon">
-        <mt-button @click="popupVisible = false" size="large" type="primary">关闭</mt-button>
+        <mt-button @click="popupVisible = false" size="normal" type="primary">关闭</mt-button>
         <mt-cell title="课程代码" :value="detailData.cjlrrbh || '--'"></mt-cell>
         <mt-cell title="课程名称" :value="detailData.kcmc || '--'"></mt-cell>
         <mt-cell title="开课院系" :value="detailData.kkyxmc || '--'"></mt-cell>
@@ -115,7 +115,7 @@ export default {
       allLoaded: false,
       total: 0,
       currentPage: 1, //当前页面
-      ajax: { pageSize: 10, pageNum: 1, ksxn: '', ksxq: '', kslb: '', ksxz: '', kcdm: '', kcmc: '' },
+      ajax: { pageSize: 30, pageNum: 1, ksxn: '', ksxq: '', kslb: '', ksxz: '', kcdm: '', kcmc: '' },
       detailData: {},
       popupVisible: false,
       popupVisible2: false,
